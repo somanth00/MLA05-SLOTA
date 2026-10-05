@@ -1,0 +1,28 @@
+[Running] python -u "c:\Users\Somanath\OneDrive\Documents\sloT-a LAB\1.find_s - Copy.py"
+[['sky', 'airtemp', 'humidity', 'wind', 'water', 'forcast', 'enjoysport'], ['sunny', 'warm', 'normal', 'strong', 'warm', 'same', 'yes'], ['sunny', 'warm', 'high', 'strong', 'warm', 'same', 'yes'], ['rainy', 'cold', 'high', 'strong', 'warm', 'change', 'no'], ['sunny', 'warm', 'high', 'strong', 'cool', 'change', 'yes']]
+
+ The total number of training instances are :  5
+
+ The initial hypothesis is : 
+['0', '0', '0', '0', '0', '0']
+
+ The hypothesis for the training instance 1 is :
+ ['0', '0', '0', '0', '0', '0']
+
+ The hypothesis for the training instance 2 is :
+ ['sunny', 'warm', 'normal', 'strong', 'warm', 'same']
+
+ The hypothesis for the training instance 3 is :
+ ['sunny', 'warm', '?', 'strong', 'warm', 'same']
+
+ The hypothesis for the training instance 4 is :
+ ['sunny', 'warm', '?', 'strong', 'warm', 'same']
+
+ The hypothesis for the training instance 5 is :
+ ['sunny', 'warm', '?', 'strong', '?', '?']
+
+ The Maximally specific hypothesis for the training instance is 
+['sunny', 'warm', '?', 'strong', '?', '?']
+
+[Done] exited with code=0 in 0.156 seconds
+
