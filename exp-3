@@ -1,0 +1,67 @@
+
+import pandas as pd
+from sklearn.tree import DecisionTreeClassifier, plot_tree
+from sklearn.preprocessing import LabelEncoder
+import matplotlib.pyplot as plt
+
+# Dataset
+data = {
+    'Outlook': ['Sunny','Sunny','Overcast','Rain','Rain',
+                'Rain','Overcast','Sunny','Sunny','Rain',
+                'Sunny','Overcast','Overcast','Rain'],
+    'Temperature': ['Hot','Hot','Hot','Mild','Cool','Cool',
+                   'Cool','Mild','Cool','Mild','Mild',
+                   'Mild','Hot','Mild'],
+    'Humidity': ['High','High','High','High','Normal',
+                 'Normal','Normal','High','Normal','Normal',
+                 'Normal','High','Normal','High'],
+    'Wind': ['Weak','Strong','Weak','Weak','Weak','Strong',
+             'Strong','Weak','Weak','Weak','Strong',
+             'Strong','Weak','Strong'],
+    'Play': ['No','No','Yes','Yes','Yes','No','Yes',
+             'No','Yes','Yes','Yes','Yes','Yes','No']
+}
+
+df = pd.DataFrame(data)
+
+# Encode data
+encoders = {}
+X = pd.DataFrame()
+
+for col in ['Outlook', 'Temperature', 'Humidity', 'Wind']:
+    encoders[col] = LabelEncoder()
+    X[col] = encoders[col].fit_transform(df[col])
+
+y = df['Play']
+
+# Create ID3 decision tree
+model = DecisionTreeClassifier(criterion='entropy')
+model.fit(X, y)
+
+# Display output
+print("DECISION TREE CLASSIFICATION")
+print("----------------------------")
+print("Training completed successfully")
+
+# New sample
+sample = pd.DataFrame([{
+    'Outlook': 'Sunny',
+    'Temperature': 'Cool',
+    'Humidity': 'Normal',
+    'Wind': 'Weak'
+}])
+
+for col in sample.columns:
+    sample[col] = encoders[col].transform(sample[col])
+
+result = model.predict(sample)
+
+print("\nNew Sample: Sunny, Cool, Normal, Weak")
+print("Predicted Class:", result[0])
+
+# Draw decision tree
+plt.figure(figsize=(12, 7))
+plot_tree(model, feature_names=X.columns,
+          class_names=['No', 'Yes'], filled=True)
+plt.title("ID3 Decision Tree")
+plt.show()
