@@ -1,0 +1,48 @@
+
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import accuracy_score
+
+# Dataset: Income, Debt, Payment History
+X = [
+    [80000, 10000, 90],
+    [70000, 15000, 85],
+    [20000, 30000, 30],
+    [25000, 25000, 40],
+    [90000, 5000, 95],
+    [30000, 20000, 50],
+    [85000, 8000, 90],
+    [15000, 35000, 20],
+    [60000, 12000, 80],
+    [18000, 32000, 25]
+]
+
+Y = [
+    'Good', 'Good', 'Poor', 'Poor', 'Good',
+    'Average', 'Good', 'Poor', 'Average', 'Poor'
+]
+
+# Split data
+X_train, X_test, y_train, y_test = train_test_split(
+    X, Y, test_size=0.3, random_state=42
+)
+
+# Train model
+model = DecisionTreeClassifier(random_state=42)
+model.fit(X_train, y_train)
+
+# Prediction
+pred = model.predict(X_test)
+
+print("CREDIT SCORE CLASSIFICATION")
+print("---------------------------")
+print("Actual:", list(y_test))
+print("Predicted:", list(pred))
+
+print("Accuracy:",
+      accuracy_score(y_test, pred) * 100, "%")
+
+# New sample
+new_customer = [[75000, 10000, 90]]
+print("New Customer Class:",
+      model.predict(new_customer)[0])

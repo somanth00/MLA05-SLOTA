@@ -1,0 +1,80 @@
+
+import math
+import random
+
+random.seed(1)
+
+# Sigmoid activation function
+def sigmoid(x):
+    return 1 / (1 + math.exp(-x))
+
+# XOR dataset
+X = [[0, 0], [0, 1], [1, 0], [1, 1]]
+Y = [0, 1, 1, 0]
+
+# Initialize weights
+w1 = [[random.uniform(-1, 1) for j in range(4)]
+      for i in range(2)]
+
+w2 = [random.uniform(-1, 1) for j in range(4)]
+
+b1 = [0.0] * 4
+b2 = 0.0
+
+lr = 0.5
+
+# Training using backpropagation
+for epoch in range(20000):
+
+    for x, target in zip(X, Y):
+
+        # Forward propagation
+        hidden = [
+            sigmoid(sum(x[i] * w1[i][j] for i in range(2)) + b1[j])
+            for j in range(4)
+        ]
+
+        output = sigmoid(
+            sum(hidden[j] * w2[j] for j in range(4)) + b2
+        )
+
+        # Output error
+        delta_out = (target - output) * output * (1 - output)
+
+        # Hidden layer error
+        delta_hidden = [
+            hidden[j] * (1 - hidden[j]) * w2[j] * delta_out
+            for j in range(4)
+        ]
+
+        # Update output weights
+        for j in range(4):
+            w2[j] += lr * delta_out * hidden[j]
+
+        b2 += lr * delta_out
+
+        # Update input weights
+        for i in range(2):
+            for j in range(4):
+                w1[i][j] += lr * delta_hidden[j] * x[i]
+
+        for j in range(4):
+            b1[j] += lr * delta_hidden[j]
+
+# Testing
+print("ANN USING BACKPROPAGATION")
+print("-------------------------")
+
+for x in X:
+    hidden = [
+        sigmoid(sum(x[i] * w1[i][j] for i in range(2)) + b1[j])
+        for j in range(4)
+    ]
+
+    output = sigmoid(
+        sum(hidden[j] * w2[j] for j in range(4)) + b2
+    )
+
+    prediction = 1 if output >= 0.5 else 0
+
+    print(x, "Predicted:", prediction)
